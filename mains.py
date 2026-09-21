@@ -1,52 +1,7 @@
-import json
+from storage import load_tasks
+import task_manager
 
-def save_tasks():
-        with open("tasks.json", "w") as f:
-                  json.dump(tasks, f)
-
-try:
-    with open("tasks.json", "r") as f:
-        tasks = json.load(f)
-except  FileNotFoundError:
-    tasks = []
-
-
-def add_task():
-    task =input("Enter task title:")
-    tasks.append({"title": task, "done": False})
-    save_tasks()
-    print(f"Added: {task}")
-
-def show_tasks():
-    print("\n1. Your tasks:")
-    for t in tasks:
-        status = "Done" if t["done"] else "Not Done"
-        print(f"- {t['title']} [{status}]")
-def mark_task_done():
-    for i, t in enumerate(tasks, start=1):
-            print(i, t["title"])
-    num = int(input(" Which task number is done?"))
-    if 1 <= num <= len(tasks):
-            tasks[num - 1]["done"] = True
-            save_tasks()
-            print("Marked as done.")
-    else:
-            print("Invalid task number.")
-def delete_task():
-
-        for i, t in enumerate(tasks, start=1):
-            print(i, t["title"])
-        try:    
-            num = int(input("Which task number do you want to delete? "))
-        except ValueError:
-            print("Please enter a number.")
-            return
-        if 1 <= num <= len(tasks):
-            removed = tasks.pop(num - 1)
-            save_tasks()
-            print(f"Deleted: {removed['title']}.")
-        else:
-            print("Invalid task number.")
+task_manager.tasks = load_tasks()
 
 
 while True:       
@@ -54,16 +9,16 @@ while True:
     choice = input("Choose an option: ")
 
     if choice == "1":
-        add_task()
+        task_manager.add_task()
 
     elif choice == "2":
-        show_tasks()
+        task_manager.show_task()
 
     elif choice == "3":
-        mark_task_done()
-
+       task_manager.mark_task_done()  
+         
     elif choice == "4":
-        delete_task()
+        task_manager.delete_task()
 
     elif choice == "5":
         print("Goodbye!")
