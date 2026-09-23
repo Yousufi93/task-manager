@@ -1,8 +1,6 @@
-from storage import load_tasks
 import task_manager
-
-task_manager.tasks = load_tasks()
-
+import database
+database.create_table()
 
 while True:       
     print("\n1. Add Task\n2. Show Tasks\n3. Mark Task as Done\n4. Delete Task\n5. Exit")

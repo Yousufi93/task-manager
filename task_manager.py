@@ -1,44 +1,54 @@
-from storage import save_tasks
-
-tasks = []
+import database
 
 
 def add_task():
     task = input("Enter task title: ")
-    tasks.append({"title": task, "done": False})
-    save_tasks(tasks)
+    database.add_task(task)
     print(f"Added: {task}")
 
 
 def show_task():
-    print("\\n1. Your tasks:")
-    for t in tasks:
-        status = "Done" if t["done"] else "Not Done"
-        print(f"- {t['title']} [{status}]")
+    print("\n Your tasks:")
+    rows = database.get_all_tasks()
+    for row in rows:
+        task_id, title, done = row
+        status = "Done" if done == 1  else "Not Done"
+        print(f"{task_id}. {title} [{status}]")
 
 
 def mark_task_done():
-    for i, t in enumerate(tasks, start=1):
-        print(i, t["title"])
-    num = int(input(" Which task number is done? "))
-    if 1 <= num <= len(tasks):
-        tasks[num -1]["done"] = True
-        save_tasks(tasks)
+    rows = database.get_all_tasks()
+    ids = [row[0] for row in rows]
+    for row in rows:
+        task_id, title, done = row
+        print(task_id, title)
+    try:
+        task_id= int(input("Which task number is done? "))
+    except ValueError:
+        print("Please enter a number. ")
+        return
+    
+    if task_id in ids:
+        database.mark_done(task_id)
         print("Marked as done.")
-    else:
-        print("Invalid task number. ")
+    else: 
+        print("Invalid task number.")
+   
 
 def delete_task():
-    for i, t in enumerate(tasks, start=1):
-        print(i, t["title"])
+    rows = database.get_all_tasks()
+    ids = [row[0] for row in rows]
+    for row in rows:
+        task_id, title, done = row
+        print(task_id, title)
     try:
-        num = int(input("Which task number do you want to delete? "))
+        task_id = int(input("Which task number do you want to delete? "))
     except ValueError:
         print("Please enter a number.")
         return
-    if 1 <= num <= len(tasks):
-        removed = tasks.pop(num - 1)
-        save_tasks(tasks)
-        print(f"Deleted: {removed['title']}.")
+    if task_id in ids:
+        database.delete_task(task_id)
+        print("Deleted:")
     else:
         print("Invalid task number.")
+   
