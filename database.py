@@ -3,11 +3,12 @@ import sqlite3
 def get_connection():
     return sqlite3.connect("tasks.db")
 
+
 def create_table():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(""" 
-        CREATE TABLE IF NOT EXISTS tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTERGER
+        CREATE TABLE IF NOT EXISTS tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTEGER
         )
     """)
     conn.commit()
