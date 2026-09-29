@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <mete charset="UIF-8">
+        <meta name="viewport" content="width=device-width, intial-scale=1.0">
+        <title>Task Manager</title>
+        <link rel="stylesheet" href="style.css">
+      
+    </head>
+    <body>
+        <div  class="container">
+            <h1> Task Manager </h1>
+
+            <div class="add-task">
+                <input 
+                    type="text"
+                    id="task-input"
+                    placeholder="Enter a new task...">
+                <butten id="add-btn">Add Task</butten>
+            </div>
+
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="task-list">
+                    <tr>
+                        <td>1</td>
+                        <td>Sample task</td>
+                        <td><span class="status done">Done</span></td>
+                        <td>
+                            <button class="btn-done">✓</button>
+                            <button class="btn-delete">✗</button>           
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
