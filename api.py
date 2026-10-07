@@ -19,6 +19,7 @@ app.add_middleware(
 
 class TaskCreate(BaseModel):
     title: str
+    priority: str = "medium"
 
     # ------------------  endpoint -----------------
 
@@ -27,20 +28,22 @@ def list_tasks():
     rows = database.get_all_tasks()
     tasks = []
     for row in rows:
-        task_id, title, done = row
+        task_id, title, done, priority = row
         tasks.append({
             "id": task_id,
             "title": title,
-            "done": bool(done)
+            "done": bool(done),
+            "priority": priority
         })
     return tasks
 
 @app.post("/tasks")
 def create_task(payload: TaskCreate):
-    database.add_task(payload.title)
+    database.add_task(payload.title, payload.priority)
     return {
         "message": "Task created",
-        "title": payload.title
+        "title": payload.title,
+        "priority": payload.priority
     }
 
 @app.patch("/tasks/{task_id}/done")

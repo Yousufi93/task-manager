@@ -24,7 +24,7 @@ body {
 h1 {
     color: #333;
     margin-bottom: 25px;
-    text-align: ceter;
+    text-align: center;
     font-size: 32px;
 
 }
@@ -33,6 +33,7 @@ h1 {
     display: flex;
     gap: 10px;
     margin-bottom: 25px;
+    flex-wrap: wrap;
 
 }
 
@@ -51,11 +52,6 @@ h1 {
 
 }
 
-#add-btn {
-    padding: 12px 25px;
-    background:#667eea;
-
-}
 
 #add-btn {
     padding: 12px 25px;
@@ -138,10 +134,50 @@ h1 {
 
 btn-delete {
     background: #dc3545;
-    color: white;
+
 }
 
 .btn-done:hover,
-btn-delete:hover {
+.btn-delete:hover {
     transform:scale(1.1);
+}
+
+#priority-select {
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    background: white;
+    cursor: pointer;
+    transition: border 0.3s;
+}
+
+#priority-select:focus{
+    outline:none;
+    border-color: #667eea;
+
+}
+
+.priority {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.priority.high {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.priority.medium {
+    background: #fff3cd;
+    color: #856404;
+
+}
+
+.priority.low {
+    background: #a8e6b0;
+
 }

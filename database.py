@@ -8,16 +8,16 @@ def create_table():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(""" 
-        CREATE TABLE IF NOT EXISTS tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTEGER
+        CREATE TABLE IF NOT EXISTS tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTEGER, priority TEXT DEFAULT 'medium'
         )
     """)
     conn.commit()
     conn.close()
 
-def add_task(title):
+def add_task(title, priority='medium'):
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO tasks (title, done) VALUES (?, ?)", (title, 0))
+    cursor.execute("INSERT INTO tasks (title, done, priority) VALUES (?, ?, ?)", (title, 0, priority))
     conn.commit()
     conn.close()
 

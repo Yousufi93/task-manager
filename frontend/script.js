@@ -3,6 +3,7 @@ const API_URL = "http://127.0.0.1:8000";
 const taskInput = document.getElementById("task-input");
 const addBtn = document.getElementById("add-btn");
 const taskList = document.getElementById("task-list");
+const prioritySelect = document.getElementById("priority-select");
 
 async function loadTasks() {
     try {
@@ -18,7 +19,7 @@ function renderTasks(tasks) {
     taskList.innerHTML = "";
 
     if (tasks.length === 0) {
-        taskList.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No tasks yet. Add one!</td></tr>";
+        taskList.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No tasks yet. Add one!</td></tr>";
         return;
     }
 
@@ -27,6 +28,12 @@ function renderTasks(tasks) {
         row.innerHTML = `
             <td>${task.id}</td>
             <td>${task.title}</td>
+            <td>
+                <span class="priority ${task.priority || 'medium'}">
+                    ${task.priority || 'medium'}
+                </span>
+            
+            </td>
             <td>
                 <span class="status ${task.done ? 'done' : 'pending'}">
                     ${task.done ? 'Done' : 'Pending'}
@@ -45,11 +52,14 @@ async function addTask() {
     const title = taskInput.value.trim();
     if (!title) return;
 
+    const priority = prioritySelect.value;
+
+
     try {
         await fetch(`${API_URL}/tasks`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ title: title })
+            body: JSON.stringify({ title: title, priority: priority })
         });
         taskInput.value = "";
         loadTasks();
