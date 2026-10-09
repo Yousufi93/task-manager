@@ -2,16 +2,21 @@
 
 A simple task manager built with **Python** — available both as a **command-line tool** and as a **REST API** built with **FastAPI**.
 
+![Task Manager UI](screenshot.png)
+
 ---
 
 ## ✨ Features
 
-- ✅ Add new tasks
-- 📋 Show all tasks with their status
+- ✅ Add new tasks with **priority** (low / medium / high)
+- 📋 Show all tasks with their status and priority
 - ✔️ Mark tasks as done
 - 🗑️ Delete tasks
+- 🎨 Beautiful web UI (HTML + CSS + JavaScript)
+- 💻 Command-line interface (CLI)
 - 💾 Persistent storage with **SQLite**
 - 🌐 Full **REST API** with automatic documentation (`/docs`)
+- 🧪 Automated tests with **pytest**
 
 ---
 
@@ -62,13 +67,13 @@ pip install -r requirements.txt
 
 ## 💻 Usage
 
-### Option A: Command-Line Interface (CLI)
+You have **three ways** to use this app:
 
-Run the interactive menu:
+### 🖥️ Option A: Web UI (Recommended)
 
+**Terminal 1** — start the API:
 ```bash
-python mains.py
-```
+uvicorn api:app --reload
 
 You will see:
 
