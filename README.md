@@ -170,6 +170,7 @@ This is my first full Python project. Through building it, I learned:
 - Using **Pydantic** for data validation
 - Handling **HTTP methods** (GET, POST, PATCH, DELETE) and **status codes** (200, 404, 422)
 - Building a **web UI** with HTML, CSS, and JavaScript
+- Implementing **filter, search, and sort** in the fronend
 - Using **Git & GitHub** for version control
 
 ---

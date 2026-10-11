@@ -254,3 +254,26 @@ h1 {
     border-color: #667eea;
 
 }
+
+.status-filter-btn {
+    padding: 8px 16px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.status-filter-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.sort-btn.active {
+    background: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+

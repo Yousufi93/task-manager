@@ -9,6 +9,9 @@ let allTasks =[];
 let currentfilter = "all";
 let sortByPriority = false;
 let searchQuery = "";
+let statusFilter = "all";
+
+
 
 function applyFilter() {
     let filtered;
@@ -17,6 +20,12 @@ function applyFilter() {
         filtered = [...allTasks];
     } else {
         filtered = allTasks.filter(task => task.priority === currentfilter);
+    }
+
+    if (statusFilter === "done") {
+        filtered = filtered.filter(task => task.done === true);
+    } else if (statusFilter === "pending") {
+        filtered = filtered.filter(task => task.done === false);
     }
 
     if (searchQuery.trim() !== "") {
@@ -73,6 +82,28 @@ function setupSort() {
 }
 setupFilters();
 setupSort();
+loadTasks();
+
+
+function setupStatusFilters() {
+    const buttons = document.querySelectorAll(".status-filter-btn");
+
+    buttons.forEach(btn => {
+
+        btn.addEventListener("click", () => {
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            statusFilter = btn.dataset.status;
+            applyFilter();
+        });
+   
+    });
+
+}
+setupFilters();
+setupSort();
+setupSearch();
+setupStatusFilters();
 loadTasks();
 
 
