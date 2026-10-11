@@ -10,6 +10,9 @@ A simple task manager built with **Python** — available both as a **command-li
 
 - ✅ Add new tasks with **priority** (low / medium / high)
 - 📋 Show all tasks with their status and priority
+- 🎯 **Filter** tasks by priority (All / High / Medium / Low)
+- ↕️ **Sort** tasks by priority
+- 🔁 Automatic **ID reset** after deletion (keeps IDs sequential)
 - ✔️ Mark tasks as done
 - 🗑️ Delete tasks
 - 🎨 Beautiful web UI (HTML + CSS + JavaScript)
@@ -65,6 +68,7 @@ pip install -r requirements.txt
 
 ---
 
+
 ## 💻 Usage
 
 You have **three ways** to use this app:
@@ -74,6 +78,30 @@ You have **three ways** to use this app:
 **Terminal 1** — start the API:
 ```bash
 uvicorn api:app --reload
+```
+
+**ُTerminal 2** - start the web server:
+```bash
+cd frontend
+python -m http.server 5500
+```
+
+
+Then open in your browser: **http://127.0.0.1:5500**
+
+You can:
+- ➕ Add tasks with priority
+- 🎯 Filter by priority
+- ↕️ Sort tasks by priority
+- ✔️ Mark tasks as done
+- 🗑️ Delete tasks
+
+### 💻 Option B: Command-Line Interface (CLI)
+
+```bash
+python mains.py
+```
+
 
 You will see:
 
@@ -86,8 +114,6 @@ You will see:
 ```
 
 ### Option B: REST API
-
-Start the API server:
 
 ```bash
 uvicorn api:app --reload
@@ -111,11 +137,11 @@ Then open in your browser:
 
 ### Example requests
 
-**Create a task:**
+**Create a task with priority:**
 ```bash
 curl -X POST http://127.0.0.1:8000/tasks \
   -H "Content-Type: application/json" \
-  -d '{"title": "Buy milk"}'
+  -d '{"title": "Buy milk", "priority": "high"}'
 ```
 
 **Mark task 1 as done:**
@@ -128,6 +154,8 @@ curl -X PATCH http://127.0.0.1:8000/tasks/1/done
 curl -X DELETE http://127.0.0.1:8000/tasks/1
 ```
 
+
+
 ---
 
 ## 🎓 What I Learned
@@ -139,6 +167,7 @@ This is my first full Python project. Through building it, I learned:
 - Building a **REST API** with **FastAPI**
 - Using **Pydantic** for data validation
 - Handling **HTTP methods** (GET, POST, PATCH, DELETE) and **status codes** (200, 404, 422)
+- Building a **web UI** with HTML, CSS, and JavaScript
 - Using **Git & GitHub** for version control
 
 ---
@@ -146,8 +175,8 @@ This is my first full Python project. Through building it, I learned:
 ## 📌 Future Improvements
 
 - [ ] Add user authentication
-- [ ] Add task priorities and due dates
-- [ ] Build a web UI (frontend)
+- [ ] Add task search
+- [ ] Add due dates
 - [ ] Migrate to PostgreSQL for production
 
 ---
