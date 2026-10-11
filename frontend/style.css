@@ -127,12 +127,12 @@ h1 {
 }
 
 .btn-done {
-    background: #28a745;
+    background: #268d0a;
     color: white;
 
 }
 
-btn-delete {
+.btn-delete {
     background: #dc3545;
 
 }
@@ -180,4 +180,56 @@ btn-delete {
 .priority.low {
     background: #a8e6b0;
 
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.filter-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.sort-btn {
+    padding: 8px 16px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: auto;
+}
+
+.sort-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.sort-btn.active {
+    background: #5568d3;
+    color: white;
+    border-color: #5568d3;
 }

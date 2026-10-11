@@ -18,12 +18,21 @@
                     >
                 <select id="priority-select">
                     <option value="low">🟢 Low</option>
-                    <option value="medium" >🟡 Medium</option>
+                    <option value="medium" selected>🟡 Medium</option>
                     <option value="high">🔴 High</option>
                 </select>
-                <butten id="add-btn">Add Task</butten>
+                <button id="add-btn">Add Task</button>
             </div>
 
+
+
+        <div class="filters">
+            <button class="filter-btn active" data-priority="all">All</button>
+            <button class="filter-btn" data-priority="high">🔴 High</button>
+            <button class="filter-btn" data-priority="medium">🟡 Medium</button>
+            <button class="filter-btn" data-priority="low">🟢 Low</button>
+            <button class="sort-btn" id="sort-btn">↕️ Sort by Priority</button>
+        </div>
             <table class="task-table">
                 <thead>
                     <tr>

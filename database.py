@@ -44,6 +44,43 @@ def delete_task(task_id):
      cursor .execute("DELETE FROM tasks WHERE id = ?", (task_id,))
      conn.commit()
      conn.close()
+     reset_ids()
+
+
+
+def reset_ids():
+    """id های تسک‌ها را از ۱ به‌ترتیب بازسازی می‌کند."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT title, done, priority FROM tasks ORDER BY id")
+        tasks = cursor.fetchall()
+        
+        cursor.execute("DROP TABLE IF EXISTS tasks")
+        
+        cursor.execute(""" 
+            CREATE TABLE tasks ( 
+                id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                title TEXT, 
+                done INTEGER,
+                priority TEXT DEFAULT 'medium'
+            )
+        """)
+        
+        for task in tasks:
+            cursor.execute(
+                "INSERT INTO tasks (title, done, priority) VALUES (?, ?, ?)",
+                task
+            )
+        
+        conn.commit()
+        
+    except Exception as e:
+        conn.rollback()
+        print(f"Error in reset_ids: {e}")
+        raise
+    finally:
+        conn.close()
 
 if __name__ == "__main__":
         create_table()
