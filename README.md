@@ -11,6 +11,7 @@ A simple task manager built with **Python** — available both as a **command-li
 - ✅ Add new tasks with **priority** (low / medium / high)
 - 📋 Show all tasks with their status and priority
 - 🎯 **Filter** tasks by priority (All / High / Medium / Low)
+- 🔍 **Search** tasks by title 
 - ↕️ **Sort** tasks by priority
 - 🔁 Automatic **ID reset** after deletion (keeps IDs sequential)
 - ✔️ Mark tasks as done
@@ -92,6 +93,7 @@ Then open in your browser: **http://127.0.0.1:5500**
 You can:
 - ➕ Add tasks with priority
 - 🎯 Filter by priority
+- 🔍 Search tasks by title
 - ↕️ Sort tasks by priority
 - ✔️ Mark tasks as done
 - 🗑️ Delete tasks
