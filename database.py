@@ -49,7 +49,7 @@ def delete_task(task_id):
 
 
 def reset_ids():
-    """id های تسک‌ها را از ۱ به‌ترتیب بازسازی می‌کند."""
+    
     conn = get_connection()
     cursor = conn.cursor()
     try:

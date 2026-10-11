@@ -8,6 +8,7 @@ const prioritySelect = document.getElementById("priority-select");
 let allTasks =[];
 let currentfilter = "all";
 let sortByPriority = false;
+let searchQuery = "";
 
 function applyFilter() {
     let filtered;
@@ -16,6 +17,13 @@ function applyFilter() {
         filtered = [...allTasks];
     } else {
         filtered = allTasks.filter(task => task.priority === currentfilter);
+    }
+
+    if (searchQuery.trim() !== "") {
+        const query = searchQuery.toLocaleLowerCase();
+        filtered = filtered.filter(task => task.title.toLocaleLowerCase().includes(query)
+        );
+
     }
     if (sortByPriority) {
         const order = { high:1, medium:2, low:3 };
@@ -65,6 +73,20 @@ function setupSort() {
 }
 setupFilters();
 setupSort();
+loadTasks();
+
+
+function setupSearch() {
+    const searchInput = document.getElementById("search-input");
+
+    searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        applyFilter();
+    });
+}
+setupFilters();
+setupSort();
+setupSearch();
 loadTasks();
 
 async function loadTasks() {
