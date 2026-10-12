@@ -17,6 +17,7 @@ A simple task manager built with **Python** — available both as a **command-li
 - 🔁 Automatic **ID reset** after deletion (keeps IDs sequential)
 - ✔️ Mark tasks as done
 - 🗑️ Delete tasks
+- 🧹 **Clear All** tasks (with confirmation)
 - 🎨 Beautiful web UI (HTML + CSS + JavaScript)
 - 💻 Command-line interface (CLI)
 - 💾 Persistent storage with **SQLite**
