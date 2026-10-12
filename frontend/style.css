@@ -277,3 +277,20 @@ h1 {
     border-color: #28a745;
 }
 
+.clear-btn {
+    padding: 8px 16px;
+    border: 2px solid #dc3545;
+    background: white;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-left: auto;
+}
+
+.clear-btn:hover {
+    background: #dc3545;
+    color: white;
+}
+

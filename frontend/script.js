@@ -5,120 +5,12 @@ const addBtn = document.getElementById("add-btn");
 const taskList = document.getElementById("task-list");
 const prioritySelect = document.getElementById("priority-select");
 
-let allTasks =[];
-let currentfilter = "all";
+let allTasks = [];
+let currentFilter = "all";
 let sortByPriority = false;
 let searchQuery = "";
 let statusFilter = "all";
 
-
-
-function applyFilter() {
-    let filtered;
-
-    if (currentfilter === "all") {
-        filtered = [...allTasks];
-    } else {
-        filtered = allTasks.filter(task => task.priority === currentfilter);
-    }
-
-    if (statusFilter === "done") {
-        filtered = filtered.filter(task => task.done === true);
-    } else if (statusFilter === "pending") {
-        filtered = filtered.filter(task => task.done === false);
-    }
-
-    if (searchQuery.trim() !== "") {
-        const query = searchQuery.toLocaleLowerCase();
-        filtered = filtered.filter(task => task.title.toLocaleLowerCase().includes(query)
-        );
-
-    }
-    if (sortByPriority) {
-        const order = { high:1, medium:2, low:3 };
-        filtered.sort((a,b) => order[a.priority] - order[b.priority]);
-
-    }
-
-    renderTasks(filtered);
-}
-
-function setupFilters() {
-    const buttons = document.querySelectorAll(".filter-btn");
-
-    buttons.forEach(btn =>{
-        btn.addEventListener("click", () => {
-            buttons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-
-            currentfilter = btn.dataset.priority;
-            applyFilter();
-
-        });
-    });
-
-}
-
-addBtn.addEventListener("click", addTask);
-
-taskInput.addEventListener("keypress", (e) => {
-    if (e.key === "Enter") addTask();
-});
-
-setupFilters();
-setupSort();
-loadTasks();
-
-
-function setupSort() {
-    const sortBtn = document.getElementById("sort-btn");
-
-    sortBtn.addEventListener("click", () => {
-        sortByPriority = !sortByPriority;
-        sortBtn.classList.toggle("active", sortByPriority);
-        applyFilter();
-    });
-
-}
-setupFilters();
-setupSort();
-loadTasks();
-
-
-function setupStatusFilters() {
-    const buttons = document.querySelectorAll(".status-filter-btn");
-
-    buttons.forEach(btn => {
-
-        btn.addEventListener("click", () => {
-            buttons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            statusFilter = btn.dataset.status;
-            applyFilter();
-        });
-   
-    });
-
-}
-setupFilters();
-setupSort();
-setupSearch();
-setupStatusFilters();
-loadTasks();
-
-
-function setupSearch() {
-    const searchInput = document.getElementById("search-input");
-
-    searchInput.addEventListener("input", (e) => {
-        searchQuery = e.target.value;
-        applyFilter();
-    });
-}
-setupFilters();
-setupSort();
-setupSearch();
-loadTasks();
 
 async function loadTasks() {
     try {
@@ -130,6 +22,7 @@ async function loadTasks() {
     }
 }
 
+
 function renderTasks(tasks) {
     taskList.innerHTML = "";
 
@@ -137,8 +30,6 @@ function renderTasks(tasks) {
         taskList.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No tasks found.</td></tr>";
         return;
     }
-
-
 
     tasks.forEach(task => {
         const row = document.createElement("tr");
@@ -149,7 +40,6 @@ function renderTasks(tasks) {
                 <span class="priority ${task.priority || 'medium'}">
                     ${task.priority || 'medium'}
                 </span>
-            
             </td>
             <td>
                 <span class="status ${task.done ? 'done' : 'pending'}">
@@ -163,17 +53,94 @@ function renderTasks(tasks) {
         `;
         taskList.appendChild(row);
     });
-
 }
+
+
+function applyFilter() {
+    let filtered;
+
+    if (currentFilter === "all") {
+        filtered = [...allTasks];
+    } else {
+        filtered = allTasks.filter(task => task.priority === currentFilter);
+    }
+
+    if (statusFilter === "done") {
+        filtered = filtered.filter(task => task.done === true);
+    } else if (statusFilter === "pending") {
+        filtered = filtered.filter(task => task.done === false);
+    }
+
+    if (searchQuery.trim() !== "") {
+        const query = searchQuery.toLowerCase();
+        filtered = filtered.filter(task => 
+            task.title.toLowerCase().includes(query)
+        );
+    }
+
+    if (sortByPriority) {
+        const order = { high: 1, medium: 2, low: 3 };
+        filtered.sort((a, b) => order[a.priority] - order[b.priority]);
+    }
+
+    renderTasks(filtered);
+}
+
+
+function setupFilters() {
+    const buttons = document.querySelectorAll(".filter-btn");
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentFilter = btn.dataset.priority;
+            applyFilter();
+        });
+    });
+}
+
+
+function setupStatusFilters() {
+    const buttons = document.querySelectorAll(".status-filter-btn");
+    buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            statusFilter = btn.dataset.status;
+            applyFilter();
+        });
+    });
+}
+
+
+function setupSort() {
+    const sortBtn = document.getElementById("sort-btn");
+    sortBtn.addEventListener("click", () => {
+        sortByPriority = !sortByPriority;
+        sortBtn.classList.toggle("active", sortByPriority);
+        applyFilter();
+    });
+}
+
+
+function setupSearch() {
+    const searchInput = document.getElementById("search-input");
+    searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        applyFilter();
+    });
+}
+
+
 async function addTask() {
     const title = taskInput.value.trim();
     if (!title) return;
 
     if (addBtn.disabled) return;
     addBtn.disabled = true;
-    addBtn.textContent = "Adding ...";
-    const priority = prioritySelect.value;
+    addBtn.textContent = "Adding...";
 
+    const priority = prioritySelect.value;
 
     try {
         await fetch(`${API_URL}/tasks`, {
@@ -185,14 +152,12 @@ async function addTask() {
         loadTasks();
     } catch (error) {
         console.error("Error adding task:", error);
+    } finally {
+        addBtn.disabled = false;
+        addBtn.textContent = "Add Task";
     }
-     finally {
-    
-    addBtn.disabled = false;
-    addBtn.textContent = "Add Task";
-    }
-
 }
+
 
 async function markDone(taskId) {
     try {
@@ -205,6 +170,7 @@ async function markDone(taskId) {
     }
 }
 
+
 async function deleteTask(taskId) {
     try {
         await fetch(`${API_URL}/tasks/${taskId}`, {
@@ -216,10 +182,35 @@ async function deleteTask(taskId) {
     }
 }
 
+
+async function clearAllTasks() {
+    const confirmed = confirm("Are you sure you want to delete ALL tasks?\n\nThis cannot be undone.");
+    if (!confirmed) return;
+
+    try {
+        await fetch(`${API_URL}/tasks`, {
+            method: "DELETE"
+        });
+        loadTasks();
+    } catch (error) {
+        console.error("Error clearing tasks:", error);
+    }
+}
+
+
+// ================== Setup Listeners (فقط یک بار) ==================
+
 addBtn.addEventListener("click", addTask);
 
 taskInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") addTask();
 });
+
+document.getElementById("clear-btn").addEventListener("click", clearAllTasks);
+
+setupFilters();
+setupStatusFilters();
+setupSort();
+setupSearch();
 
 loadTasks();

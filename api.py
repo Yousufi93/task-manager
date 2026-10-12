@@ -79,3 +79,11 @@ def remove_task(task_id: int):
         "message": "Task deleted",
         "id": task_id
     }
+
+
+@app.delete("/tasks")
+def clear_tasks():
+    database.clear_all_tasks()
+    return {
+        "message": "All tasks cleared"
+    }

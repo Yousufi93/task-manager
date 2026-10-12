@@ -82,6 +82,22 @@ def reset_ids():
     finally:
         conn.close()
 
+
+def clear_all_tasks():
+     conn = get_connection()
+     cursor = conn.sursor()
+     try:
+          cursor.execute("DELETE FROM tasks")
+          cursor.execute("DELETE FROM sqlite_sequence WHERE name='tasks'")
+          conn.commit()
+     except Exception as e:
+          conn.rollback()
+          print(f"Error in clear_all_tasks: {e}")
+          raise
+     finally:
+          conn.close()
+
+
 if __name__ == "__main__":
         create_table()
         print("‌Before:", get_all_tasks())
