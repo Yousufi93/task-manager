@@ -11,6 +11,7 @@ A simple task manager built with **Python** — available both as a **command-li
 - ✅ Add new tasks with **priority** (low / medium / high)
 - 📋 Show all tasks with their status and priority
 - 🎯 **Filter** tasks by priority (All / High / Medium / Low)
+- 📊 **Filter** tasks by status (All / Done / Pending)
 - 🔍 **Search** tasks by title 
 - ↕️ **Sort** tasks by priority
 - 🔁 Automatic **ID reset** after deletion (keeps IDs sequential)
