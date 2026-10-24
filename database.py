@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 def get_connection():
     return sqlite3.connect("tasks.db")
@@ -8,16 +9,16 @@ def create_table():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(""" 
-        CREATE TABLE IF NOT EXISTS tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTEGER, priority TEXT DEFAULT 'medium'
+        CREATE TABLE IF NOT EXISTS tasks ( id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, done INTEGER, priority TEXT DEFAULT 'medium', owner TEXT
         )
     """)
     conn.commit()
     conn.close()
 
-def add_task(title, priority='medium'):
+def add_task(title, priority='medium', owner=None):
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO tasks (title, done, priority) VALUES (?, ?, ?)", (title, 0, priority))
+    cursor.execute("INSERT INTO tasks (title, done, priority, owner) VALUES (?, ?, ?, ?)", (title, 0, priority, owner))
     conn.commit()
     conn.close()
 
@@ -98,12 +99,45 @@ def clear_all_tasks():
           conn.close()
 
 
+def create_users_table():
+     conn = get_connection()
+     cursor = conn.cursor()
+     cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL, created_at TEXT)
+        """)
+     conn.commit()
+     conn.close()
+
+
+def create_user(username, password_hash):
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        cursor.execute(
+            "INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)",
+            (username, password_hash, created_at)
+        )
+        conn.commit()
+        return True
+    except sqlite3.IntegrityError:
+        return False
+    finally:
+        conn.close()
+
+
+def get_user_by_username(username):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+    user = cursor.fetchone()
+    conn.close()
+    return user
+
 if __name__ == "__main__":
         create_table()
-        print("‌Before:", get_all_tasks())
-        mark_done(1)
-        print("After mark done:", get_all_tasks())
-        delete_task(1)
-        print("After delete:", get_all_tasks())
-        
+        create_users_table()
+        print(" Tables created successfully.")
+       
+
 
