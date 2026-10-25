@@ -86,7 +86,7 @@ def reset_ids():
 
 def clear_all_tasks():
      conn = get_connection()
-     cursor = conn.sursor()
+     cursor = conn.cursor()
      try:
           cursor.execute("DELETE FROM tasks")
           cursor.execute("DELETE FROM sqlite_sequence WHERE name='tasks'")

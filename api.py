@@ -44,12 +44,13 @@ def list_tasks(current_user: str = Depends(get_current_user)):
     rows = database.get_all_tasks()
     tasks = []
     for row in rows:
-        task_id, title, done, priority = row
+        task_id, title, done, priority, owner = row
         tasks.append({
             "id": task_id,
             "title": title,
             "done": bool(done),
-            "priority": priority
+            "priority": priority,
+            "owner": owner
         })
     return tasks
 
